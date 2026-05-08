@@ -13,7 +13,7 @@ from telegram.ext import (
     ContextTypes
 )
 
-BOT_TOKEN = "8585255621:AAFSprY9LRhfmrXzp3kUbcufycsNQPJUXWk"
+BOT_TOKEN = os.getenv("8585255621:AAFSprY9LRhfmrXzp3kUbcufycsNQPJUXWk")
 
 # ================= DATABASE =================
 
