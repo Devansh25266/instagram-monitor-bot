@@ -41,6 +41,11 @@ conn.commit()
 
 L = instaloader.Instaloader()
 
+L.load_session_from_file(
+    "trackerbotnew",
+    filename="session-trackerbotnew"
+)
+
 def check_instagram(username):
 
     try:
