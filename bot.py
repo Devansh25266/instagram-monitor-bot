@@ -55,9 +55,14 @@ def check_instagram(username):
             username
         )
 
-        print(f"{username} -> ACTIVE")
+        # verify profile really exists
+        if profile.username.lower() == username.lower():
 
-        return "ACTIVE"
+            print(f"{username} -> ACTIVE")
+
+            return "ACTIVE"
+
+        return "UNKNOWN"
 
     except Exception as e:
 
@@ -68,17 +73,16 @@ def check_instagram(username):
         print(f"ERROR: {error}")
         print("====================\n")
 
-        # disabled / deleted
+        # strong disabled indicators only
         if (
-            "not found" in error
+            "404" in error
             or "does not exist" in error
-            or "404" in error
             or "profile not exists" in error
         ):
 
             return "DISABLED"
 
-        # session expired
+        # session problems
         elif (
             "login required" in error
             or "401" in error
@@ -87,7 +91,7 @@ def check_instagram(username):
 
             return "SESSION_EXPIRED"
 
-        # rate limited
+        # rate limit
         elif (
             "please wait a few minutes" in error
             or "429" in error
@@ -95,13 +99,6 @@ def check_instagram(username):
         ):
 
             return "RATE_LIMITED"
-
-        # private but exists
-        elif (
-            "private" in error
-        ):
-
-            return "ACTIVE"
 
         return "UNKNOWN"
 
