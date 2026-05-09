@@ -55,52 +55,20 @@ def check_instagram(username):
             username
         )
 
-        # verify profile really exists
-        if profile.username.lower() == username.lower():
+        print(f"{username} -> ACTIVE")
 
-            print(f"{username} -> ACTIVE")
-
-            return "ACTIVE"
-
-        return "UNKNOWN"
+        return "ACTIVE"
 
     except Exception as e:
 
-        error = str(e).lower()
+        error = str(e)
 
         print("\n====================")
         print(f"USERNAME: {username}")
-        print(f"ERROR: {error}")
+        print(f"FULL ERROR: {error}")
         print("====================\n")
 
-        # strong disabled indicators only
-        if (
-            "404" in error
-            or "does not exist" in error
-            or "profile not exists" in error
-        ):
-
-            return "DISABLED"
-
-        # session problems
-        elif (
-            "login required" in error
-            or "401" in error
-            or "unauthorized" in error
-        ):
-
-            return "SESSION_EXPIRED"
-
-        # rate limit
-        elif (
-            "please wait a few minutes" in error
-            or "429" in error
-            or "rate limit" in error
-        ):
-
-            return "RATE_LIMITED"
-
-        return "UNKNOWN"
+        return f"ERROR"
 
 # ================= TELEGRAM COMMANDS =================
 
