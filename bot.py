@@ -50,10 +50,12 @@ def check_instagram(username):
 
     try:
 
-        instaloader.Profile.from_username(
+        profile = instaloader.Profile.from_username(
             L.context,
             username
         )
+
+        print(f"{username} -> ACTIVE")
 
         return "ACTIVE"
 
@@ -61,8 +63,45 @@ def check_instagram(username):
 
         error = str(e).lower()
 
-        if "not found" in error:
+        print("\n====================")
+        print(f"USERNAME: {username}")
+        print(f"ERROR: {error}")
+        print("====================\n")
+
+        # disabled / deleted
+        if (
+            "not found" in error
+            or "does not exist" in error
+            or "404" in error
+            or "profile not exists" in error
+        ):
+
             return "DISABLED"
+
+        # session expired
+        elif (
+            "login required" in error
+            or "401" in error
+            or "unauthorized" in error
+        ):
+
+            return "SESSION_EXPIRED"
+
+        # rate limited
+        elif (
+            "please wait a few minutes" in error
+            or "429" in error
+            or "rate limit" in error
+        ):
+
+            return "RATE_LIMITED"
+
+        # private but exists
+        elif (
+            "private" in error
+        ):
+
+            return "ACTIVE"
 
         return "UNKNOWN"
 
