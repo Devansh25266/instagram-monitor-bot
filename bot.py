@@ -68,16 +68,12 @@ def check_instagram(username):
         print(f"ERROR: {error}")
         print("====================\n")
 
-        # ONLY strong disabled indicators
-        if (
-            "does not exist" in error
-            or "404" in error
-            or "profile not exists" in error
-        ):
+        # ONLY if Instagram explicitly says user does not exist
+        if "does not exist" in error:
 
             return "DISABLED"
 
-        # everything else means instagram blocked/check failed
+        # everything else = instagram blocked request
         return "ERROR"
 
 # ================= TELEGRAM COMMANDS =================
